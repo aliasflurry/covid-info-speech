@@ -65,3 +65,4 @@ class SpeechRecognizer(threading.Thread):
 
             if text.find(END_PHRASE) != -1:  # stop loop
                 self.recognized_text += "Exit\n"
+                break
