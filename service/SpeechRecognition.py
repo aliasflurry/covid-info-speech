@@ -3,7 +3,7 @@ import speech_recognition as sr
 import threading
 
 class SpeechRecognizer(threading.Thread):
-    
+
     def speak(self, text):
         engine = pyttsx3.init()
         engine.say(text)
@@ -26,27 +26,32 @@ class SpeechRecognizer(threading.Thread):
 
         return said.lower()
 
-    def __init__(self):
+    def __init__(self, TOTAL_PATTERNS, COUNTRY_PATTERNS, country_list):
         super(SpeechRecognizer, self).__init__()
         self.setDaemon(True)
         self.recognized_text = "Initializing\n"
+        self.TOTAL_PATTERNS = TOTAL_PATTERNS
+        self.COUNTRY_PATTERNS = COUNTRY_PATTERNS
+        self.country_list = country_list
 
     def run(self):
+        UPDATE_COMMAND = "update"
+        END_PHRASE = "stop"
         while True:
             # print("Listening...\n")
             text = self.get_audio()
             self.recognized_text += text + "\n"
             result = None
 
-            for pattern, func in COUNTRY_PATTERNS.items():
+            for pattern, func in self.COUNTRY_PATTERNS.items():
                 if pattern.match(text):
                     words = set(text.split(" "))
-                    for country in country_list:
+                    for country in self.country_list:
                         if country in words:
                             result = func(country)
                             break
 
-            for pattern, func in TOTAL_PATTERNS.items():
+            for pattern, func in self.TOTAL_PATTERNS.items():
                 if pattern.match(text):
                     result = func()
                     break

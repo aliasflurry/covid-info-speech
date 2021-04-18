@@ -15,7 +15,6 @@ PROJECT_TOKEN = cfg.credential['PROJECT_TOKEN']
 RUN_TOKEN= cfg.credential['RUN_TOKEN']
 
 data = Data(API_KEY, PROJECT_TOKEN)
-END_PHRASE = "stop"
 country_list = data.get_list_of_countries()
 
 TOTAL_PATTERNS = {
@@ -30,9 +29,8 @@ COUNTRY_PATTERNS = {
 				re.compile("[\w\s]+ deaths [\w\s]+"): lambda country: data.get_country_data(country)['total_deaths'],
 				}
 
-UPDATE_COMMAND = "update"
 
-recognizer = SpeechRecognizer()
+recognizer = SpeechRecognizer(TOTAL_PATTERNS, COUNTRY_PATTERNS, country_list)
 recognizer.start()
 
 class App(object):
