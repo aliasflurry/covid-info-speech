@@ -26,13 +26,14 @@ class SpeechRecognizer(threading.Thread):
 
         return said.lower()
 
-    def __init__(self, TOTAL_PATTERNS, COUNTRY_PATTERNS, country_list):
+    def __init__(self, TOTAL_PATTERNS, COUNTRY_PATTERNS, country_list, data):
         super(SpeechRecognizer, self).__init__()
         self.setDaemon(True)
         self.recognized_text = "Initializing\n"
         self.TOTAL_PATTERNS = TOTAL_PATTERNS
         self.COUNTRY_PATTERNS = COUNTRY_PATTERNS
         self.country_list = country_list
+        self.data = data
 
     def run(self):
         UPDATE_COMMAND = "update"
@@ -58,7 +59,7 @@ class SpeechRecognizer(threading.Thread):
 
             if text == UPDATE_COMMAND:
                 result = "Data is being updated. This may take a moment!"
-                data.update_data()
+                self.recognized_text += self.data.update_data()
 
             if result:
                 self.speak(result)

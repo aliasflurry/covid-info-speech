@@ -30,7 +30,7 @@ COUNTRY_PATTERNS = {
 				}
 
 
-recognizer = SpeechRecognizer(TOTAL_PATTERNS, COUNTRY_PATTERNS, country_list)
+recognizer = SpeechRecognizer(TOTAL_PATTERNS, COUNTRY_PATTERNS, country_list, data)
 recognizer.start()
 
 class App(object):
@@ -49,8 +49,7 @@ class App(object):
         self.lbl1.grid(row=0,column=0,padx=2,pady=2)
 
         self.recognized_text = StringVar()
-        self.txt1 = tki.Text(txt_frm, borderwidth=3, relief="sunken", height=100,width=55,
-        )
+        self.txt1 = tki.Text(txt_frm, borderwidth=3, relief="sunken", height=100,width=55,)
         self.txt1.config(font=("consolas", 12), undo=True, wrap='word')
         self.txt1.grid(row=25, column=0, sticky="nsew", padx=2, pady=2)
         root.after(100, self.update_recognized_text)
