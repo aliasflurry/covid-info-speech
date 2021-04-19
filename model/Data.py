@@ -48,18 +48,6 @@ class Data:
 		return countries
 
 	def update_data(self):
+		self.data = self.get_data()
+		return "Data updated\n"
 
-		def poll():
-			time.sleep(0.1)
-			old_data = self.data
-			while True:
-				new_data = self.get_data()
-				if new_data != old_data:
-					self.data = new_data
-					print("Data updated")
-					break
-				time.sleep(5)
-
-
-		t = threading.Thread(target=poll)
-		t.start()
